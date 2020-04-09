@@ -41,10 +41,30 @@ const server = http.createServer((req, res) => {
             }
         })
     } else if (pathname === '/product') {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
+        const { id } = query
+
+        fs.readFile('./mocks/db.json', 'utf-8', (err, data) => {
+            const parsedData = JSON.parse(data)
+
+            const selectedIdx = parsedData.findIndex((d) => d.id === parseInt(id, 10))
+            const selectedFruit = parsedData[selectedIdx]
+            const { productName, image, from, nutrients, quantity, price, organic, description } = selectedFruit
+
+            let replacedProductHTML = productHTML
+                .replace(/{__PRODUCT__IMAGE__}/g, image)
+                .replace('{__PRODUCT__TITLE__}', productName)
+                .replace('{__PRODUCT__QUANTITY__}', quantity)
+                .replace(/{__PRODUCT__PRICE__}/g, price)
+                .replace('{__PRODUCT__ID__}', id)
+                .replace('{__PRODUCT__FROM__}', from)
+                .replace('{__PRODUCT__DESCRIPTION__}', description)
+                .replace('{__PRODUCT__NUTRIENTS__}', nutrients)
+
+            res.writeHead(200, {
+                'Content-Type': 'text/html',
+            })
+            res.end(replacedProductHTML)
         })
-        res.end(productHTML)
     } else {
         res.writeHead(404)
         res.end('404 page not found')
