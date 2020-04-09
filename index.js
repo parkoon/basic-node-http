@@ -4,6 +4,7 @@ const fs = require('fs')
 
 const PORT = process.env.PORT || 4000
 
+const cardHTML = fs.readFileSync('./templates/card.html', 'utf-8')
 const overviewHTML = fs.readFileSync('./templates/overview.html', 'utf-8')
 const productHTML = fs.readFileSync('./templates/product.html', 'utf-8')
 
@@ -12,10 +13,22 @@ const server = http.createServer((req, res) => {
     const { pathname, query } = url.parse(req.url, true)
 
     if (pathname === '/' || pathname === '/overview') {
-        res.writeHead(200, {
-            'Content-Type': 'text/html',
+        fs.readFile('./mocks/db.json', 'utf-8', (err, data) => {
+            if (err) {
+                res.writeHead(500).end('eternal server error')
+            } else {
+                const parsedData = JSON.parse(data)
+                let cards = ''
+                parsedData.map((d) => {
+                    cards += cardHTML
+                })
+
+                const output = overviewHTML.replace('{__CARD__}', cards)
+                res.writeHead(200, {
+                    'Content-Type': 'text/html',
+                }).end(output)
+            }
         })
-        res.end(overviewHTML)
     } else if (pathname === '/product') {
         res.writeHead(200, {
             'Content-Type': 'text/html',
