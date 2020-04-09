@@ -12,10 +12,17 @@ const server = http.createServer((req, res) => {
     const { pathname, query } = url.parse(req.url, true)
 
     if (pathname === '/' || pathname === '/overview') {
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+        })
         res.end(overviewHTML)
     } else if (pathname === '/product') {
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+        })
         res.end(productHTML)
     } else {
+        res.writeHead(404)
         res.end('404 page not found')
     }
 })
