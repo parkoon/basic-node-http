@@ -21,11 +21,11 @@ const server = http.createServer((req, res) => {
                 let cards = ''
                 parsedData.map(({ id, productName, image, from, nutrients, quantity, price, organic, description }) => {
                     let replacedCardHTML = cardHTML
-                        .replace('{__CARD__IMGAGE__}', image)
-                        .replace('{__CARD__TITLE__}', productName)
-                        .replace('{__CARD__QUANTITY__}', quantity)
-                        .replace('{__CARD__PRICE__}', price)
-                        .replace('{__CARD__ID__}', id)
+                        .replace(/{__CARD__IMGAGE__}/g, image)
+                        .replace(/{__CARD__TITLE__}/g, productName)
+                        .replace(/{__CARD__QUANTITY__}/g, quantity)
+                        .replace(/{__CARD__PRICE__}/g, price)
+                        .replace(/{__CARD__ID__}/g, id)
 
                     if (!organic) {
                         replacedCardHTML = replacedCardHTML.replace('{__IS__ORGANIC__}', 'not-organic')
@@ -52,13 +52,13 @@ const server = http.createServer((req, res) => {
 
             let replacedProductHTML = productHTML
                 .replace(/{__PRODUCT__IMAGE__}/g, image)
-                .replace('{__PRODUCT__TITLE__}', productName)
-                .replace('{__PRODUCT__QUANTITY__}', quantity)
+                .replace(/{__PRODUCT__TITLE__}/g, productName)
+                .replace(/{__PRODUCT__QUANTITY__}/g, quantity)
                 .replace(/{__PRODUCT__PRICE__}/g, price)
-                .replace('{__PRODUCT__ID__}', id)
-                .replace('{__PRODUCT__FROM__}', from)
-                .replace('{__PRODUCT__DESCRIPTION__}', description)
-                .replace('{__PRODUCT__NUTRIENTS__}', nutrients)
+                .replace(/{__PRODUCT__ID__}/g, id)
+                .replace(/{__PRODUCT__FROM__}/g, from)
+                .replace(/{__PRODUCT__DESCRIPTION__}/g, description)
+                .replace(/{__PRODUCT__NUTRIENTS__}/g, nutrients)
 
             res.writeHead(200, {
                 'Content-Type': 'text/html',
