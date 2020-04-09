@@ -19,8 +19,19 @@ const server = http.createServer((req, res) => {
             } else {
                 const parsedData = JSON.parse(data)
                 let cards = ''
-                parsedData.map((d) => {
-                    cards += cardHTML
+                parsedData.map(({ id, productName, image, from, nutrients, quantity, price, organic, description }) => {
+                    let replacedCardHTML = cardHTML
+                        .replace('{__CARD__IMGAGE__}', image)
+                        .replace('{__CARD__TITLE__}', productName)
+                        .replace('{__CARD__QUANTITY__}', quantity)
+                        .replace('{__CARD__PRICE__}', price)
+                        .replace('{__CARD__ID__}', id)
+
+                    if (!organic) {
+                        replacedCardHTML = replacedCardHTML.replace('{__IS__ORGANIC__}', 'not-organic')
+                    }
+
+                    cards += replacedCardHTML
                 })
 
                 const output = overviewHTML.replace('{__CARD__}', cards)

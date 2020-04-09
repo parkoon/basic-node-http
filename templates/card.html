@@ -1,25 +1,25 @@
 <figure class="card">
-    <div class="card__emoji">🥑🥑</div>
+    <div class="card__emoji">{__CARD__IMGAGE__}</div>
 
     <div class="card__title-box">
-        <h2 class="card__title">Fresh Avocado</h2>
+        <h2 class="card__title">{__CARD__TITLE__}</h2>
     </div>
 
     <div class="card__details">
-        <div class="card__detail-box">
+        <div class="card__detail-box {__IS__ORGANIC__}">
             <h6 class="card__detail card__detail--organic">Organic!</h6>
         </div>
 
         <div class="card__detail-box">
-            <h6 class="card__detail">4 🥑 per 📦</h6>
+            <h6 class="card__detail">{__CARD__QUANTITY__} 📦</h6>
         </div>
 
         <div class="card__detail-box">
-            <h6 class="card__detail card__detail--price">6.50€</h6>
+            <h6 class="card__detail card__detail--price">{__CARD__PRICE__}</h6>
         </div>
     </div>
 
-    <a class="card__link" href="#">
+    <a class="card__link" href="http://localhost:4000/product?id={__CARD__ID__}">
         <span>Detail <i class="emoji-right">👉</i></span>
     </a>
 </figure>
