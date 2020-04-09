@@ -28,13 +28,13 @@ const server = http.createServer((req, res) => {
                         .replace(/{__CARD__ID__}/g, id)
 
                     if (!organic) {
-                        replacedCardHTML = replacedCardHTML.replace('{__IS__ORGANIC__}', 'not-organic')
+                        replacedCardHTML = replacedCardHTML.replace(/{__IS__ORGANIC__}/g, 'not-organic')
                     }
 
                     cards += replacedCardHTML
                 })
 
-                const output = overviewHTML.replace('{__CARD__}', cards)
+                const output = overviewHTML.replace(/{__CARD__}/g, cards)
                 res.writeHead(200, {
                     'Content-Type': 'text/html',
                 }).end(output)
@@ -59,6 +59,10 @@ const server = http.createServer((req, res) => {
                 .replace(/{__PRODUCT__FROM__}/g, from)
                 .replace(/{__PRODUCT__DESCRIPTION__}/g, description)
                 .replace(/{__PRODUCT__NUTRIENTS__}/g, nutrients)
+
+            if (!organic) {
+                replacedProductHTML = replacedProductHTML.replace(/{__IS__ORGANIC__}/g, 'not-organic')
+            }
 
             res.writeHead(200, {
                 'Content-Type': 'text/html',
